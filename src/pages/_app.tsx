@@ -1,14 +1,22 @@
-import { type AppType } from "next/app";
+import type { AppProps } from "next/app";
 
 import { api } from "~/utils/api";
 
 import "~/styles/globals.css";
 import { Toaster } from "sonner";
 
-const MyApp: AppType = ({ Component, pageProps }) => {
+type AppLayoutProps = {
+  Component: AppProps["Component"] & {
+    getLayout?: (page: React.ReactElement) => React.ReactNode;
+  };
+  pageProps: AppProps["pageProps"];
+};
+
+const MyApp = ({ Component, pageProps: { ...pageProps } }: AppLayoutProps) => {
+  const getLayout = Component.getLayout ?? ((page: React.ReactNode) => page);
   return (
     <>
-      <Component {...pageProps} />;
+      {getLayout(<Component {...pageProps} />)}
       <Toaster richColors />
     </>
   );

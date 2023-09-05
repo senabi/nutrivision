@@ -1,6 +1,5 @@
 import Head from "next/head";
-
-import { api } from "~/utils/api";
+import { MainLayout } from "~/components/layout";
 
 import {
   Card,
@@ -9,12 +8,19 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "~/components/ui/card"
+} from "~/components/ui/card";
+import { NextLayoutPage } from "~/lib/utils";
 
+function HomeContent() {
+  return (
+    <div>
+      <div>camera</div>
+      <div>information</div>
+    </div>
+  );
+}
 
-export default function Home() {
-  const hello = api.example.hello.useQuery({ text: "from tRPC" });
-
+const Home: NextLayoutPage = () => {
   return (
     <>
       <Head>
@@ -22,17 +28,13 @@ export default function Home() {
         <meta name="description" content="By me" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Card>
-    <CardHeader>
-      <CardTitle>Card Title</CardTitle>
-      <CardDescription>Card Description</CardDescription>
-    </CardHeader>
-    <CardContent>
-      <p>Card Content</p>
-    </CardContent>
-    <CardFooter>
-      <p>Card Footer</p>
-    </CardFooter>
-  </Card>    </>
+      <HomeContent />
+    </>
   );
-}
+};
+
+Home.getLayout = (page) => {
+  return <MainLayout>{page}</MainLayout>;
+};
+
+export default Home;
