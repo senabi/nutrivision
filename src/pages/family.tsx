@@ -7,6 +7,8 @@ import {
   CardHeader,
   CardTitle,
 } from "~/components/ui/card"
+import { Drawer } from 'vaul';
+import { NewMemberDialog } from "~/components/newMemberDialog";
 
 type FamilyMember = {
   name: string;
@@ -23,27 +25,26 @@ const members: FamilyMember[] = [
 ]
 
 const Family = () => {
-
-
-  return <div className="m-5 flex flex-col">
-    <div className="overflow-y-scroll max-h-fit">
-      {members.map((e) =>
-        <Card>
-          <CardHeader>
-            <CardTitle>{e.name}</CardTitle>
-            <CardDescription>{e.goals}</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <p>{e.diseases}</p>
-          </CardContent>
-          <CardFooter>
-            <p>10-10-10s</p>
-          </CardFooter>
-        </Card>)}
-
+  return <> <div className="m-5">
+    {members.map((e, i) =>
+      <Card key={i} className="m-2">
+        <CardHeader>
+          <CardTitle>{e.name}</CardTitle>
+          <CardDescription>{e.goals}</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <p>{e.diseases}</p>
+        </CardContent>
+        <CardFooter>
+          <p>10-10-10s</p>
+        </CardFooter>
+      </Card>)}
+    <div className="w-full sticky bottom-5 flex justify-end">
+      <NewMemberDialog />
     </div>
-    <Button className="ml-auto">+</Button>
-  </div>
+  </div >
+
+  </>
 }
 
 export default Family;
