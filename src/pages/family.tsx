@@ -9,6 +9,7 @@ import {
 } from "~/components/ui/card"
 import { Drawer } from 'vaul';
 import { NewMemberDialog } from "~/components/newMemberDialog";
+import { api } from "~/utils/api";
 
 type FamilyMember = {
   name: string;
@@ -16,33 +17,28 @@ type FamilyMember = {
   diseases: string;
 }
 
-const members: FamilyMember[] = [
-  { name: 'gabriel', goals: 'ganar peso', diseases: 'gastritis' },
-  { name: 'gabriel', goals: 'ganar peso', diseases: 'gastritis' },
-  { name: 'gabriel', goals: 'ganar peso', diseases: 'gastritis' },
-  { name: 'gabriel', goals: 'ganar peso', diseases: 'gastritis' },
-  { name: 'gabriel', goals: 'ganar peso', diseases: 'gastritis' },
-]
-
 const Family = () => {
-  return <> <div className="m-5">
-    {members.map((e, i) =>
-      <Card key={i} className="m-2">
-        <CardHeader>
-          <CardTitle>{e.name}</CardTitle>
-          <CardDescription>{e.goals}</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <p>{e.diseases}</p>
-        </CardContent>
-        <CardFooter>
-          <p>10-10-10s</p>
-        </CardFooter>
-      </Card>)}
-    <div className="w-full sticky bottom-5 flex justify-end">
-      <NewMemberDialog />
-    </div>
-  </div >
+  const { data } = api.familyMember.readAll.useQuery()
+
+  return <>
+    <div className="m-5">
+      {data?.map((e, i) =>
+        <Card key={i} className="m-2">
+          <CardHeader>
+            <CardTitle>{e.name}</CardTitle>
+            <CardDescription>{e.goals}</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <p>{e.diseases}</p>
+          </CardContent>
+          <CardFooter>
+            <p>10-10-10s</p>
+          </CardFooter>
+        </Card>)}
+      <div className="w-full sticky bottom-5 flex justify-end">
+        <NewMemberDialog />
+      </div>
+    </div >
 
   </>
 }
