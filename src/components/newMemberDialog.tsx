@@ -14,15 +14,15 @@ export function NewMemberDialog() {
                 <Drawer.Content className="flex flex-col rounded-t-[10px] h-[96%] mt-24 fixed bottom-0 left-0 right-0">
                     <div className="p-4 bg-background rounded-t-[10px] flex-1">
                         <div className="mx-auto w-12 h-1.5 flex-shrink-0 rounded-full bg-zinc-300 mb-8" />
-                        <div className="max-w-md mx-auto">
+                        <div className="max-w-md mx-auto flex flex-col">
                             <Drawer.Title className="font-medium mb-4">
                                 Agregar nuevo integrante de familia
                             </Drawer.Title>
                             <Input type="text" placeholder="Nombre" className="my-2" />
-                            <Textarea />
-                            <Textarea />
+                            <Textarea placeholder="Objetivos" className="my-2" />
+                            <Textarea placeholder="Enfermedades" className="my-2" />
 
-                            <Button variant={"secondary"}>Confirmar</Button>
+                            <Button className="ml-auto my-2">Confirmar</Button>
                         </div>
                     </div>
                 </Drawer.Content>
