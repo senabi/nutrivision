@@ -6,8 +6,9 @@ generator client {
 }
 
 datasource db {
-    provider = "mysql"
-    url      = env("DATABASE_URL")
+    provider     = "mysql"
+    url          = env("DATABASE_URL")
+    relationMode = "prisma"
 }
 
 model Example {
@@ -23,4 +24,20 @@ model FamilyMember {
     diseases  String
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
+}
+
+model Product {
+    id                    String @id @default(cuid())
+    name                  String
+    barcode               Int
+    category              String
+    carbohydrates         String
+    fats                  String
+    proteins              String
+    vitamins              String
+    minerals              String
+    dangerous_ingredients String
+    allergens             String
+    serving_sizes         String
+    danger_medical        String
 }
