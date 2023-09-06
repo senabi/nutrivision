@@ -34,9 +34,6 @@ const Family: NextLayoutPage = () => {
             <CardContent>
               <p>{e.diseases}</p>
             </CardContent>
-            <CardFooter>
-              <p>10-10-10s</p>
-            </CardFooter>
           </Card>
         ))}
         <div className="sticky bottom-5 flex w-full justify-end">
