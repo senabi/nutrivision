@@ -81,22 +81,20 @@ function ResultTabs(props: { barcode: string }) {
           <CardContent className="space-y-2">
             <div className="flex flex-col gap-2">
               {productQuery.data && (
-                <Card>
-                  <CardContent>
-                    {dataFamily?.map((item, idx) => {
-                      return (
-                        <div key={idx}>
-                          <Card>
-                            <SendMessagesResponse
-                              product={productQuery.data}
-                              familyMember={item}
-                            />
-                          </Card>
-                        </div>
-                      );
-                    })}
-                  </CardContent>
-                </Card>
+                <div className="flex flex-col gap-2">
+                  {dataFamily?.map((item, idx) => {
+                    return (
+                      <div key={idx}>
+                        <Card>
+                          <SendMessagesResponse
+                            product={productQuery.data}
+                            familyMember={item}
+                          />
+                        </Card>
+                      </div>
+                    );
+                  })}
+                </div>
               )}
             </div>
           </CardContent>
