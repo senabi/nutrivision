@@ -37,7 +37,7 @@ export const openaiRouter = createTRPCRouter({
               member.diseases
                 ? `y tiene las siguientes enfermedades: ${member.diseases}`
                 : ""
-            } responde con el nombre de la persona y un emoyi donde  😢 significa que el producto perjudica al objetivo, 👌 que no lo perjudica pero tampoco ayuda,  🤤que si ayuda y 😷 que no puede consumirlo por enfermedades."`,
+            } responde con el nombre de la persona y un emoyi donde  😢 significa que el producto perjudica al objetivo, 👌 que no lo perjudica pero tampoco ayuda,  🤤que si ayuda y 😷 que no puede consumirlo por enfermedades. el formato en el que me daras la respuesta es el siguiente nombre : emoji, razon y un salto de linea"`,
         ),
       )}
             `;
