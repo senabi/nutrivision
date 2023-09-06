@@ -29,7 +29,7 @@ function SideMenu() {
 
 export function MainLayout(props: { children: React.ReactNode }) {
   return (
-    <div className="mx-auto flex min-h-[100dvh] max-w-7xl flex-1 flex-col">
+    <div className="mx-auto flex min-h-screen max-w-7xl flex-1 flex-col">
       <div className="flex justify-end">
         <SideMenu />
       </div>
