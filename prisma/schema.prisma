@@ -30,9 +30,12 @@ model Product {
     id                    String @id @default(cuid())
     name                  String
     barcode               String
+    calories              String
     category              String
     carbohydrates         String
     fats                  String
+    saturated_fats        String
+    trans_fats            String
     proteins              String
     vitamins              String
     minerals              String

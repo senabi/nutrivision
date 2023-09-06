@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { toast } from "sonner";
 import { MainLayout } from "~/components/layout";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { Button } from "~/components/ui/button";
@@ -13,6 +14,7 @@ import {
 } from "~/components/ui/card";
 import { Separator } from "~/components/ui/separator";
 import { NextLayoutPage } from "~/lib/utils";
+import { api } from "~/utils/api";
 
 type FamilyMemberScore = {
   score: string;
@@ -56,6 +58,14 @@ function HomeContent() {
 }
 
 const Home: NextLayoutPage = () => {
+  const mut = api.product.create.useMutation({
+    onSuccess: () => {
+      toast.success("Miembro de familia agregado");
+    },
+    onError: () => {
+      toast.error("Error al agregar miembro de familia");
+    },
+  });
   return (
     <>
       <Head>
@@ -64,6 +74,30 @@ const Home: NextLayoutPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <HomeContent />
+      <button
+        onClick={() => {
+          mut.mutate({
+            name: "Tiyapuy Potato Chips",
+            barcode: "0731199055785",
+            category: "Alimentos",
+            carbohydrates: "18 g",
+            fats: "7.8 g",
+            saturated_fats: "0.8 g",
+            trans_fats: "0",
+            proteins: "0.7 g",
+            calories: "145",
+            vitamins: "N.D.",
+            minerals: "N.D.",
+            // Los campos opcionales se pueden incluir o excluir según sea necesario.
+            dangerous_ingredients: "Lista de ingredientes peligrosos",
+            allergens: "Lista de alérgenos",
+            serving_sizes: "Tamaño de la porción",
+            danger_medical: "Información médica sobre riesgos",
+          });
+        }}
+      >
+        press me to create a dummy dummy
+      </button>
     </>
   );
 };
