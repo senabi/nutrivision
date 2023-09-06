@@ -13,6 +13,7 @@ import {
   CardTitle,
 } from "~/components/ui/card";
 import { Separator } from "~/components/ui/separator";
+import { Html5QrcodePlugin } from "~/components/Html5QrcodeScannerPlugin";
 import { NextLayoutPage } from "~/lib/utils";
 import { api } from "~/utils/api";
 
@@ -43,9 +44,19 @@ function FamilyMemberScoreCard(memberScore: FamilyMemberScore) {
 }
 
 function HomeContent() {
+  const onNewScanResult = (decodedText, decodedResult) => {
+    alert(decodedResult);
+  };
+
   return (
     <div className="flex h-screen flex-col">
-      <Card className="m-3 h-1/3">camera</Card>
+      <Card className="m-3 h-1/3">  <Html5QrcodePlugin
+        fps={10}
+        qrbox={250}
+        disableFlip={false}
+        qrCodeSuccessCallback={onNewScanResult}
+      />
+      </Card>
       <Card className="m-3 h-1/2">
         <Button>familia</Button> <Button>producto</Button>
         <Separator className="mb-10 mt-2" />
@@ -58,46 +69,15 @@ function HomeContent() {
 }
 
 const Home: NextLayoutPage = () => {
-  const mut = api.product.create.useMutation({
-    onSuccess: () => {
-      toast.success("Miembro de familia agregado");
-    },
-    onError: () => {
-      toast.error("Error al agregar miembro de familia");
-    },
-  });
   return (
     <>
       <Head>
-        <title>Nutrivision</title>
+        <title>NutriScan</title>
         <meta name="description" content="By me" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <HomeContent />
-      <button
-        onClick={() => {
-          mut.mutate({
-            name: "Tiyapuy Potato Chips",
-            barcode: "0731199055785",
-            category: "Alimentos",
-            carbohydrates: "18 g",
-            fats: "7.8 g",
-            saturated_fats: "0.8 g",
-            trans_fats: "0",
-            proteins: "0.7 g",
-            calories: "145",
-            vitamins: "N.D.",
-            minerals: "N.D.",
-            // Los campos opcionales se pueden incluir o excluir según sea necesario.
-            dangerous_ingredients: "Lista de ingredientes peligrosos",
-            allergens: "Lista de alérgenos",
-            serving_sizes: "Tamaño de la porción",
-            danger_medical: "Información médica sobre riesgos",
-          });
-        }}
-      >
-        press me to create a dummy dummy
-      </button>
+
     </>
   );
 };
