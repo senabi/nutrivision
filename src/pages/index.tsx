@@ -78,11 +78,11 @@ function ResultTabs(props: { barcode: string }) {
           <CardContent className="space-y-2">
             <div className="flex flex-col gap-2">
               {productQuery.data && (
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-4">
                   {dataFamily?.map((item, idx) => {
                     return (
-                      <div key={idx} className="rounded border">
-                        <p>{item.name}</p>
+                      <div key={idx}>
+                        <p className="font-semibold">{item.name}</p>
                         <SendMessagesResponse
                           product={productQuery.data}
                           familyMember={item}
@@ -165,7 +165,7 @@ function HomeContent() {
             <CardHeader>
               <CardTitle>Resultados</CardTitle>
             </CardHeader>
-            <CardContent className="flex flex-1 min-h-[30vh] flex-col items-center justify-center">
+            <CardContent className="flex min-h-[30vh] flex-1 flex-col items-center justify-center">
               <AlertCircle className="mx-auto h-12 w-12" />
               <p>Scanea para ver los resultados</p>
             </CardContent>
