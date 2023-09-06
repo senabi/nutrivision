@@ -1,5 +1,7 @@
 import Head from "next/head";
 import { MainLayout } from "~/components/layout";
+import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar"
+import { Button } from "~/components/ui/button";
 
 import {
   Card,
@@ -9,13 +11,44 @@ import {
   CardHeader,
   CardTitle,
 } from "~/components/ui/card";
+import { Separator } from "~/components/ui/separator";
 import { NextLayoutPage } from "~/lib/utils";
+
+type FamilyMemberScore = {
+  score: string;
+  name: string;
+}
+
+const mockup: FamilyMemberScore[] = [
+  { score: '😃', name: 'gabriel' },
+  { score: '😄', name: 'charo' },
+  { score: '🥲', name: 'charo' },
+]
+
+function FamilyMemberScoreCard(memberScore: FamilyMemberScore) {
+  return <Card className="my-3">
+    <CardContent className="flex flex-row justify-center py-">
+      <Avatar>
+        <AvatarImage src="https://github.com/shadcn.png" />
+        <AvatarFallback>CN</AvatarFallback>
+      </Avatar>
+      <p className="mx-4">{memberScore.name}</p>
+      <p className="mx-4">{memberScore.score}</p>
+    </CardContent>
+  </Card>
+}
 
 function HomeContent() {
   return (
-    <div>
-      <div>camera</div>
-      <div>information</div>
+    <div className="h-screen flex flex-col">
+      <Card className="h-1/3 m-3">camera</Card>
+      <Card className="h-1/2 m-3">
+        <Button>familia</Button>  <Button>producto</Button>
+        <Separator className="mb-10 mt-2" />
+        {
+          mockup.map((e) => <FamilyMemberScoreCard name={e.name} score={e.score} />)
+        }
+      </Card>
     </div>
   );
 }
