@@ -33,11 +33,11 @@ export const openaiRouter = createTRPCRouter({
       )}. Para cada miembro de la familia estos son sus objetivos nutricionales: ${JSON.stringify(
         family.map(
           (member) =>
-            `A ${member.name} le interesa ${member.goals} ${
+            `${member.name} tiene los siguientes objetivos: ${member.goals} ${
               member.diseases
                 ? `y tiene las siguientes enfermedades: ${member.diseases}`
                 : ""
-            } dame un score del 1 al 3 donde 1 significa que el producto perjudica al objetivo, 2 que no lo perjudica pero tampoco ayuda y 3 que si ayuda,  `,
+            } responde con el nombre de la persona y un emoyi donde  😢 significa que el producto perjudica al objetivo, 👌 que no lo perjudica pero tampoco ayuda,  🤤que si ayuda y 😷 que no puede consumirlo por enfermedades."`,
         ),
       )}
             `;
@@ -48,7 +48,7 @@ export const openaiRouter = createTRPCRouter({
         messages: [
           {
             role: "system",
-            content: "Eres un nutricionista, responde de forma corta",
+            content: "Eres un nutricionista directo, responde de forma corta",
           },
           {
             role: "user",
