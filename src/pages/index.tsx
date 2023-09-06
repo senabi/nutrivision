@@ -1,21 +1,16 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Head from "next/head";
-import { toast } from "sonner";
 import { MainLayout } from "~/components/layout";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { Button } from "~/components/ui/button";
 
+import { Html5QrcodePlugin } from "~/components/Html5QrcodeScannerPlugin";
 import {
   Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
+  CardContent
 } from "~/components/ui/card";
 import { Separator } from "~/components/ui/separator";
-import { Html5QrcodePlugin } from "~/components/Html5QrcodeScannerPlugin";
 import { NextLayoutPage } from "~/lib/utils";
-import { api } from "~/utils/api";
 
 type FamilyMemberScore = {
   score: string;
@@ -44,7 +39,7 @@ function FamilyMemberScoreCard(memberScore: FamilyMemberScore) {
 }
 
 function HomeContent() {
-  const onNewScanResult = (decodedText, decodedResult) => {
+  const onNewScanResult = (decodedText: any, decodedResult: any) => {
     alert(decodedResult);
   };
 
