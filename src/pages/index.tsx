@@ -166,6 +166,9 @@ function HomeContent() {
           }}
         />
       </Card>
+      <div className="h-1/2 flex-1 px-3 pb-3">
+        {typeof barcode !== "undefined" && <ResultTabs barcode={barcode} />}
+      </div>
     </div>
   );
 }
