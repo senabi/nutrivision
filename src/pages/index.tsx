@@ -24,6 +24,7 @@ import { type RouterOutputs, api } from "~/utils/api";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { FamilyMemberSchema } from "~/lib/validators";
+import { AlertCircle } from "lucide-react";
 
 type FamilyMemberScore = {
   score: string;
@@ -47,7 +48,7 @@ function SendMessagesResponse(props: {
   if (scoreQuery.isLoading) {
     return <Skeleton className="h-12 w-full" />;
   }
-  return <div className="whitespace-pre">{scoreQuery.data}</div>;
+  return <div>{scoreQuery.data}</div>;
 }
 
 function ResultTabs(props: { barcode: string }) {
@@ -68,52 +69,29 @@ function ResultTabs(props: { barcode: string }) {
   console.log("result tabs ->", productQuery.data);
   return (
     <Tabs defaultValue="family" className="flex h-full flex-col">
-      <TabsList className="grid w-full grid-cols-3">
+      <TabsList className="grid w-full grid-cols-2">
         <TabsTrigger value="family">Familia</TabsTrigger>
-        <TabsTrigger value="product">Producto</TabsTrigger>
         <TabsTrigger value="nutricionista">Nutricionista</TabsTrigger>
       </TabsList>
       <TabsContent value="family" className="flex-1">
         <Card className="h-full">
-          <CardHeader>
-            <CardTitle>Familia</CardTitle>
-          </CardHeader>
           <CardContent className="space-y-2">
             <div className="flex flex-col gap-2">
               {productQuery.data && (
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-4 pb-2">
                   {dataFamily?.map((item, idx) => {
                     return (
                       <div key={idx}>
-                        <Card>
-                          <SendMessagesResponse
-                            product={productQuery.data}
-                            familyMember={item}
-                          />
-                        </Card>
+                        <p className="font-semibold">{item.name}</p>
+                        <SendMessagesResponse
+                          product={productQuery.data}
+                          familyMember={item}
+                        />
                       </div>
                     );
                   })}
                 </div>
               )}
-            </div>
-          </CardContent>
-        </Card>
-      </TabsContent>
-      <TabsContent value="product" className="flex-1">
-        <Card className="h-full">
-          <CardHeader>
-            <CardTitle>Nutricionistas</CardTitle>
-            <CardDescription>
-              * Información nutricional positiva (1)
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-2">
-            <div className="space-y-1">
-              <Label htmlFor="current">Current password</Label>
-            </div>
-            <div className="space-y-1">
-              <Label htmlFor="new">New password</Label>
             </div>
           </CardContent>
         </Card>
@@ -180,7 +158,19 @@ function HomeContent() {
         />
       </Card>
       <div className="h-1/2 flex-1 px-3 pb-3">
-        {typeof barcode !== "undefined" && <ResultTabs barcode={barcode} />}
+        {typeof barcode !== "undefined" ? (
+          <ResultTabs barcode={barcode} />
+        ) : (
+          <Card className="flex-1">
+            <CardHeader>
+              <CardTitle>Resultados</CardTitle>
+            </CardHeader>
+            <CardContent className="flex min-h-[30vh] flex-1 flex-col items-center justify-center">
+              <AlertCircle className="mx-auto h-12 w-12" />
+              <p>Scanea para ver los resultados</p>
+            </CardContent>
+          </Card>
+        )}
       </div>
     </div>
   );
