@@ -24,6 +24,7 @@ import { type RouterOutputs, api } from "~/utils/api";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { FamilyMemberSchema } from "~/lib/validators";
+import { AlertCircle } from "lucide-react";
 
 type FamilyMemberScore = {
   score: string;
@@ -157,7 +158,19 @@ function HomeContent() {
         />
       </Card>
       <div className="h-1/2 flex-1 px-3 pb-3">
-        {typeof barcode !== "undefined" && <ResultTabs barcode={barcode} />}
+        {typeof barcode !== "undefined" ? (
+          <ResultTabs barcode={barcode} />
+        ) : (
+          <Card className="flex-1">
+            <CardHeader>
+              <CardTitle>Resultados</CardTitle>
+            </CardHeader>
+            <CardContent className="flex flex-1 min-h-[30vh] flex-col items-center justify-center">
+              <AlertCircle className="mx-auto h-12 w-12" />
+              <p>Scanea para ver los resultados</p>
+            </CardContent>
+          </Card>
+        )}
       </div>
     </div>
   );

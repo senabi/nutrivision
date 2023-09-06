@@ -35,7 +35,7 @@ export function MainLayout(props: { children: React.ReactNode }) {
       <div className="flex justify-end">
         <SideMenu />
       </div>
-      <main className="flex flex-1 flex-col overflow-hidden">
+      <main className="flex flex-1 flex-col">
         {props.children}
       </main>
     </div>
