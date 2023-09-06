@@ -174,15 +174,11 @@ function HomeContent() {
             decodedText: string,
             _result: Html5QrcodeResult,
           ) => {
+            console.log("pipipi");
             setBarcode(decodedText);
           }}
         />
       </Card>
-      <div className="h-1/2 flex-1 px-3 pb-3">
-        {typeof barcode}
-        {typeof barcode === "undefined" ? "undefined" : barcode}
-        {typeof barcode !== "undefined" && <ResultTabs barcode={barcode} />}
-      </div>
     </div>
   );
 }
