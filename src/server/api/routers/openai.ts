@@ -30,7 +30,7 @@ export const openaiRouter = createTRPCRouter({
       });
       const content = `Estos son los valores nutricionales del producto ${JSON.stringify(
         input.product,
-      )}. Para ${input.member.name} tiene los siguientes objetivos: ${input.member.goals} y las siguiente enfermedades ${input.member.diseases}` + "responde con el nombre de la persona y un emoyi donde  😢 significa que el producto perjudica al objetivo, 👌 que no lo perjudica pero tampoco ayuda,  🤤que si ayuda y 😷 que no puede consumirlo por enfermedades. el formato en el que me daras la respuesta es el siguiente nombre : emoji un simbolo de coma y luego la razon";
+      )}. Para ${input.member.name} tiene los siguientes objetivos: ${input.member.goals} y las siguiente enfermedades ${input.member.diseases}` + "responde con el nombre de la persona y un emoyi donde  😢 significa que el producto perjudica al objetivo, 👌 que no lo perjudica pero tampoco ayuda,  🤤que si ayuda y 😷 que no puede consumirlo por enfermedades, solo usaras un emoji. el formato en el que me daras la respuesta es el siguiente emoji y luego la razon, solo puedes escoger un emoji`";
       const res = await openai.chat.completions.create({
         model: "gpt-3.5-turbo",
         stream: false,
