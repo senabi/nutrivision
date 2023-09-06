@@ -20,15 +20,31 @@ import { Label } from "~/components/ui/label";
 import { Skeleton } from "~/components/ui/skeleton";
 import { Tabs, TabsList, TabsContent, TabsTrigger } from "~/components/ui/tabs";
 import { type NextLayoutPage } from "~/lib/utils";
-import { api } from "~/utils/api";
+import { RouterOutputs, api } from "~/utils/api";
 
 type FamilyMemberScore = {
   score: string;
   name: string;
 };
 
+function SendMessagesResponse(props: {
+  product: RouterOutputs["product"]["readOne"];
+}) {
+  const scoreQuery = api.openai.getFamilyScore.useQuery(
+    {
+      product: props.product,
+    },
+    {
+      refetchOnWindowFocus: false,
+    },
+  );
+  if (scoreQuery.isLoading) {
+    return <Skeleton className="h-12 w-full" />;
+  }
+  return <div className="whitespace-pre">{scoreQuery.data}</div>;
+}
+
 function ResultTabs() {
-  const { messages, input, handleInputChange, handleSubmit } = useChat();
   const productQuery = api.product.readOne.useQuery({
     barcode: "0731199055785",
   });
@@ -48,23 +64,26 @@ function ResultTabs() {
           </CardHeader>
           <CardContent className="space-y-2">
             <div className="flex flex-col gap-2">
-              {familyQuery.isLoading && (
-                <>
-                  <Skeleton className="h-12 w-full" />
-                  <Skeleton className="h-12 w-full" />
-                  <Skeleton className="h-12 w-full" />
-                  <Skeleton className="h-12 w-full" />
-                  <Skeleton className="h-12 w-full" />
-                  <Skeleton className="h-12 w-full" />
-                </>
+              {/* {familyQuery.isLoading && ( */}
+              {/*   <> */}
+              {/*     <Skeleton className="h-12 w-full" /> */}
+              {/*     <Skeleton className="h-12 w-full" /> */}
+              {/*     <Skeleton className="h-12 w-full" /> */}
+              {/*     <Skeleton className="h-12 w-full" /> */}
+              {/*     <Skeleton className="h-12 w-full" /> */}
+              {/*     <Skeleton className="h-12 w-full" /> */}
+              {/*   </> */}
+              {/* )} */}
+              {/* {familyQuery.data?.map((member) => ( */}
+              {/*   <FamilyMemberScoreCard */}
+              {/*     key={member.id} */}
+              {/*     name={member.name} */}
+              {/*     score={"AA"} */}
+              {/*   /> */}
+              {/* ))} */}
+              {productQuery.data && (
+                <SendMessagesResponse product={productQuery.data} />
               )}
-              {familyQuery.data?.map((member) => (
-                <FamilyMemberScoreCard
-                  key={member.id}
-                  name={member.name}
-                  score={"AA"}
-                />
-              ))}
             </div>
           </CardContent>
         </Card>
@@ -115,15 +134,21 @@ function HomeContent() {
             aspectRatio: 1,
             disableFlip: false,
             fps: 10,
-            qrbox: 250
+            qrbox: 250,
           }}
-          qrCodeErrorCallback={(_errorMessage: string, _error: Html5QrcodeError) => undefined}
-          qrCodeSuccessCallback={(decodedText: string, _result: Html5QrcodeResult) => {
-            alert(decodedText)
+          qrCodeErrorCallback={(
+            _errorMessage: string,
+            _error: Html5QrcodeError,
+          ) => undefined}
+          qrCodeSuccessCallback={(
+            decodedText: string,
+            _result: Html5QrcodeResult,
+          ) => {
+            alert(decodedText);
           }}
         />
       </Card>
-      <div className="flex-1 px-3 pb-3 h-1/2">
+      <div className="h-1/2 flex-1 px-3 pb-3">
         <ResultTabs />
       </div>
     </div>
@@ -139,7 +164,6 @@ const Home: NextLayoutPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <HomeContent />
-
     </>
   );
 };
