@@ -43,24 +43,25 @@ function FamilyMemberScoreCard(memberScore: FamilyMemberScore) {
 function HomeContent() {
   return (
     <div className="flex h-screen flex-col">
-      <Card className="m-3 h-1/3">  <Html5QrcodePlugin
-        config={{
-          aspectRatio: 1,
-          disableFlip: false,
-          fps: 10,
-          qrbox: 250
-        }}
-        qrCodeErrorCallback={(_errorMessage: string, _error: Html5QrcodeError) => undefined}
-        qrCodeSuccessCallback={(decodedText: string, _result: Html5QrcodeResult) => {
-          alert(decodedText)
-        }}
-      />
+      <Card className="m-3 h-1/2">
+        <Html5QrcodePlugin
+          config={{
+            aspectRatio: 1,
+            disableFlip: false,
+            fps: 10,
+            qrbox: 250
+          }}
+          qrCodeErrorCallback={(_errorMessage: string, _error: Html5QrcodeError) => undefined}
+          qrCodeSuccessCallback={(decodedText: string, _result: Html5QrcodeResult) => {
+            alert(decodedText)
+          }}
+        />
       </Card>
       <Card className="m-3 h-1/2">
         <Button>familia</Button> <Button>producto</Button>
         <Separator className="mb-10 mt-2" />
-        {mockup.map((e) => (
-          <FamilyMemberScoreCard key={e.name} name={e.name} score={e.score} />
+        {mockup.map((e, i) => (
+          <FamilyMemberScoreCard key={i} name={e.name} score={e.score} />
         ))}
       </Card>
     </div>
