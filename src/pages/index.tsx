@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { MainLayout } from "~/components/layout";
-import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar"
+import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { Button } from "~/components/ui/button";
 
 import {
@@ -17,37 +17,39 @@ import { NextLayoutPage } from "~/lib/utils";
 type FamilyMemberScore = {
   score: string;
   name: string;
-}
+};
 
 const mockup: FamilyMemberScore[] = [
-  { score: '😃', name: 'gabriel' },
-  { score: '😄', name: 'charo' },
-  { score: '🥲', name: 'charo' },
-]
+  { score: "😃", name: "gabriel" },
+  { score: "😄", name: "charo" },
+  { score: "🥲", name: "charo" },
+];
 
 function FamilyMemberScoreCard(memberScore: FamilyMemberScore) {
-  return <Card className="my-3">
-    <CardContent className="flex flex-row justify-center py-">
-      <Avatar>
-        <AvatarImage src="https://github.com/shadcn.png" />
-        <AvatarFallback>CN</AvatarFallback>
-      </Avatar>
-      <p className="mx-4">{memberScore.name}</p>
-      <p className="mx-4">{memberScore.score}</p>
-    </CardContent>
-  </Card>
+  return (
+    <Card className="my-3">
+      <CardContent className="py- flex flex-row justify-center">
+        <Avatar>
+          <AvatarImage src="https://github.com/shadcn.png" />
+          <AvatarFallback>CN</AvatarFallback>
+        </Avatar>
+        <p className="mx-4">{memberScore.name}</p>
+        <p className="mx-4">{memberScore.score}</p>
+      </CardContent>
+    </Card>
+  );
 }
 
 function HomeContent() {
   return (
-    <div className="h-screen flex flex-col">
-      <Card className="h-1/3 m-3">camera</Card>
-      <Card className="h-1/2 m-3">
-        <Button>familia</Button>  <Button>producto</Button>
+    <div className="flex h-screen flex-col">
+      <Card className="m-3 h-1/3">camera</Card>
+      <Card className="m-3 h-1/2">
+        <Button>familia</Button> <Button>producto</Button>
         <Separator className="mb-10 mt-2" />
-        {
-          mockup.map((e) => <FamilyMemberScoreCard name={e.name} score={e.score} />)
-        }
+        {mockup.map((e) => (
+          <FamilyMemberScoreCard key={e.name} name={e.name} score={e.score} />
+        ))}
       </Card>
     </div>
   );
