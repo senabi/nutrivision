@@ -23,4 +23,5 @@ export const productSchema = z.object({
     allergens: z.string(),
     serving_sizes: z.string(),
     danger_medical: z.string(),
+    nutritionist: z.string().nullable(),
   });

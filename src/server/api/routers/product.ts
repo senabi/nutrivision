@@ -22,6 +22,7 @@ export const productRouter = createTRPCRouter({
     allergens:input.allergens,
     serving_sizes:input.serving_sizes,
     danger_medical: input.danger_medical,
+    nutritionist: input.nutritionist,
       },
     });
   }),

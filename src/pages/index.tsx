@@ -64,9 +64,10 @@ function ResultTabs(props: { barcode: string }) {
   console.log("result tabs ->", productQuery.data);
   return (
     <Tabs defaultValue="family" className="flex h-full flex-col">
-      <TabsList className="grid w-full grid-cols-2">
+      <TabsList className="grid w-full grid-cols-3">
         <TabsTrigger value="family">Familia</TabsTrigger>
         <TabsTrigger value="product">Producto</TabsTrigger>
+        <TabsTrigger value="nutricionista">Nutricionista</TabsTrigger>
       </TabsList>
       <TabsContent value="family" className="flex-1">
         <Card className="h-full">
@@ -85,7 +86,8 @@ function ResultTabs(props: { barcode: string }) {
       <TabsContent value="product" className="flex-1">
         <Card className="h-full">
           <CardHeader>
-            <CardTitle>Información del producto</CardTitle>
+            <CardTitle>Nutricionistas</CardTitle>
+            <CardTitle>Nutricionistas</CardTitle>
             <CardDescription>
               * Información nutricional positiva (1)
             </CardDescription>
@@ -96,6 +98,38 @@ function ResultTabs(props: { barcode: string }) {
             </div>
             <div className="space-y-1">
               <Label htmlFor="new">New password</Label>
+            </div>
+          </CardContent>
+        </Card>
+      </TabsContent>
+
+      <TabsContent value="nutricionista" className="flex-1">
+        <Card className="h-full">
+          <CardHeader>
+            <CardTitle>Recomendaciones</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-2">
+            <div className="space-y-1">
+              <Label htmlFor="new">
+                {productQuery.nutritionist ??
+                  "No hay recomendaciones de un nutricionista."}
+              </Label>
+            </div>
+          </CardContent>
+        </Card>
+      </TabsContent>
+
+      <TabsContent value="nutricionista" className="flex-1">
+        <Card className="h-full">
+          <CardHeader>
+            <CardTitle>Recomendaciones</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-2">
+            <div className="space-y-1">
+              <Label htmlFor="new">
+                {productQuery.nutritionist ??
+                  "No hay recomendaciones de un nutricionista."}
+              </Label>
             </div>
           </CardContent>
         </Card>

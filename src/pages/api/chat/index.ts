@@ -1,5 +1,6 @@
 import { OpenAIStream, StreamingTextResponse } from "ai";
 import OpenAI from "openai";
+import type { CompletionCreateParams } from 'openai/resources/chat';
 
 export const runtime = "edge";
 
@@ -50,10 +51,34 @@ export default async function handler(req: Request) {
   ] as OpenAI.Chat.Completions.CompletionCreateParamsStreaming["messages"];
 
   formattedMessages = formattedMessages;
+
+  const functions: CompletionCreateParams.Function[] = [
+    {
+      name: 'get_current_weather',
+      description: 'Get the current weather',
+      parameters: {
+        type: 'object',
+        properties: {
+          location: {
+            type: 'string',
+            description: 'The city and state, e.g. San Francisco, CA',
+          },
+          format: {
+            type: 'string',
+            enum: ['celsius', 'fahrenheit'],
+            description:
+              'The temperature unit to use. Infer this from the users location.',
+          },
+        },
+        required: ['location', 'format'],
+      },
+    },
+  ];
   const response = await openai.chat.completions.create({
     model: "gpt-3.5-turbo",
     stream: true,
     messages: formattedMessages,
+    functions
   });
   const stream = OpenAIStream(response);
   return new StreamingTextResponse(stream);

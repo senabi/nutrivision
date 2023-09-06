@@ -27,7 +27,7 @@ model FamilyMember {
 }
 
 model Product {
-    id                    String @id @default(cuid())
+    id                    String  @id @default(cuid())
     name                  String
     barcode               String
     calories              String
@@ -43,6 +43,7 @@ model Product {
     allergens             String
     serving_sizes         String
     danger_medical        String
+    nutritionist          String? @db.Text
 
     @@index([barcode])
 }
