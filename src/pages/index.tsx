@@ -77,7 +77,11 @@ function ResultTabs(props: { barcode: string }) {
           <CardContent className="space-y-2">
             <div className="flex flex-col gap-2">
               {productQuery.data && (
-                <SendMessagesResponse product={productQuery.data} />
+                <Card>
+                  <CardContent>
+                    <SendMessagesResponse product={productQuery.data} />
+                  </CardContent>
+                </Card>
               )}
             </div>
           </CardContent>
@@ -86,7 +90,6 @@ function ResultTabs(props: { barcode: string }) {
       <TabsContent value="product" className="flex-1">
         <Card className="h-full">
           <CardHeader>
-            <CardTitle>Nutricionistas</CardTitle>
             <CardTitle>Nutricionistas</CardTitle>
             <CardDescription>
               * Información nutricional positiva (1)
@@ -98,22 +101,6 @@ function ResultTabs(props: { barcode: string }) {
             </div>
             <div className="space-y-1">
               <Label htmlFor="new">New password</Label>
-            </div>
-          </CardContent>
-        </Card>
-      </TabsContent>
-
-      <TabsContent value="nutricionista" className="flex-1">
-        <Card className="h-full">
-          <CardHeader>
-            <CardTitle>Recomendaciones</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-2">
-            <div className="space-y-1">
-              <Label htmlFor="new">
-                {productQuery.data?.nutritionist ??
-                  "No hay recomendaciones de un nutricionista."}
-              </Label>
             </div>
           </CardContent>
         </Card>
