@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import { Html5QrcodeScanner } from 'html5-qrcode';
-import { Html5QrcodeScannerConfig } from 'html5-qrcode/esm/html5-qrcode-scanner';
+import { Html5QrcodeScanner, QrcodeSuccessCallback, QrcodeErrorCallback } from 'html5-qrcode';
+import { type Html5QrcodeScannerConfig } from 'html5-qrcode/esm/html5-qrcode-scanner';
 import { useEffect } from 'react';
 
 const qrcodeRegionId = "html5qr-code-full-region";
 
 // Creates the configuration object for Html5QrcodeScanner.
-const createConfig = (props: { fps: number; qrbox: number; aspectRatio: number; disableFlip: undefined; }): Html5QrcodeScannerConfig => {
+const createConfig = (props: { fps: number; qrbox: number; aspectRatio: number; disableFlip: boolean; }): Html5QrcodeScannerConfig => {
     const config: Html5QrcodeScannerConfig = {
         fps: 0,
     };
@@ -27,12 +27,12 @@ const createConfig = (props: { fps: number; qrbox: number; aspectRatio: number; 
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const Html5QrcodePlugin = (props: any) => {
+export const Html5QrcodePlugin = (props: { config: { fps: number, qrbox: number, disableFlip: boolean, aspectRatio: number }, qrCodeSuccessCallback: QrcodeSuccessCallback, qrCodeErrorCallback: QrcodeErrorCallback }) => {
 
     useEffect(() => {
         // when component mounts
-        const config: Html5QrcodeScannerConfig = createConfig(props);
-        const verbose = props.verbose === true;
+        const config: Html5QrcodeScannerConfig = createConfig(props.config);
+        const verbose = false;
         // Suceess callback is required.
         if (!(props.qrCodeSuccessCallback)) {
             throw "qrCodeSuccessCallback is required callback.";

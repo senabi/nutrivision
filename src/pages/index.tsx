@@ -11,6 +11,8 @@ import {
 } from "~/components/ui/card";
 import { Separator } from "~/components/ui/separator";
 import { NextLayoutPage } from "~/lib/utils";
+import { Html5QrcodeResult } from "html5-qrcode";
+import { Html5QrcodeError } from "html5-qrcode/esm/core";
 
 type FamilyMemberScore = {
   score: string;
@@ -39,17 +41,21 @@ function FamilyMemberScoreCard(memberScore: FamilyMemberScore) {
 }
 
 function HomeContent() {
-  const onNewScanResult = (decodedText: any, decodedResult: any) => {
-    alert(decodedResult);
-  };
-
   return (
     <div className="flex h-screen flex-col">
       <Card className="m-3 h-1/3">  <Html5QrcodePlugin
-        fps={10}
-        qrbox={250}
-        disableFlip={false}
-        qrCodeSuccessCallback={onNewScanResult}
+        config={{
+          aspectRatio: 1,
+          disableFlip: false,
+          fps: 10,
+          qrbox: 250
+        }}
+        qrCodeErrorCallback={(errorMessage: string, _error: Html5QrcodeError) => {
+          alert(errorMessage)
+        }}
+        qrCodeSuccessCallback={(decodedText: string, _result: Html5QrcodeResult) => {
+          alert(decodedText)
+        }}
       />
       </Card>
       <Card className="m-3 h-1/2">
