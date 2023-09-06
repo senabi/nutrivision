@@ -20,7 +20,8 @@ import { Label } from "~/components/ui/label";
 import { Skeleton } from "~/components/ui/skeleton";
 import { Tabs, TabsList, TabsContent, TabsTrigger } from "~/components/ui/tabs";
 import { type NextLayoutPage } from "~/lib/utils";
-import { RouterOutputs, api } from "~/utils/api";
+import { type RouterOutputs, api } from "~/utils/api";
+import { useState } from "react";
 
 type FamilyMemberScore = {
   score: string;
@@ -36,6 +37,7 @@ function SendMessagesResponse(props: {
     },
     {
       refetchOnWindowFocus: false,
+      staleTime: Infinity,
     },
   );
   if (scoreQuery.isLoading) {
@@ -44,13 +46,11 @@ function SendMessagesResponse(props: {
   return <div className="whitespace-pre">{scoreQuery.data}</div>;
 }
 
-function ResultTabs() {
+function ResultTabs(props: { barcode: string }) {
   const productQuery = api.product.readOne.useQuery({
-    barcode: "0731199055785",
+    barcode: props.barcode,
   });
-  const familyQuery = api.familyMember.readAll.useQuery();
-  console.log("prod", productQuery.data);
-  console.log("family", familyQuery.data);
+  console.log("result tabs ->", productQuery.data);
   return (
     <Tabs defaultValue="family" className="flex h-full flex-col">
       <TabsList className="grid w-full grid-cols-2">
@@ -64,23 +64,6 @@ function ResultTabs() {
           </CardHeader>
           <CardContent className="space-y-2">
             <div className="flex flex-col gap-2">
-              {/* {familyQuery.isLoading && ( */}
-              {/*   <> */}
-              {/*     <Skeleton className="h-12 w-full" /> */}
-              {/*     <Skeleton className="h-12 w-full" /> */}
-              {/*     <Skeleton className="h-12 w-full" /> */}
-              {/*     <Skeleton className="h-12 w-full" /> */}
-              {/*     <Skeleton className="h-12 w-full" /> */}
-              {/*     <Skeleton className="h-12 w-full" /> */}
-              {/*   </> */}
-              {/* )} */}
-              {/* {familyQuery.data?.map((member) => ( */}
-              {/*   <FamilyMemberScoreCard */}
-              {/*     key={member.id} */}
-              {/*     name={member.name} */}
-              {/*     score={"AA"} */}
-              {/*   /> */}
-              {/* ))} */}
               {productQuery.data && (
                 <SendMessagesResponse product={productQuery.data} />
               )}
@@ -126,6 +109,8 @@ function FamilyMemberScoreCard(memberScore: FamilyMemberScore) {
 }
 
 function HomeContent() {
+  const [barcode, setBarcode] = useState<string | undefined>(undefined);
+  console.log("barcode ->", barcode);
   return (
     <div className="flex h-screen flex-col">
       <Card className="m-3 h-1/2">
@@ -144,12 +129,12 @@ function HomeContent() {
             decodedText: string,
             _result: Html5QrcodeResult,
           ) => {
-            alert(decodedText);
+            setBarcode(decodedText);
           }}
         />
       </Card>
       <div className="h-1/2 flex-1 px-3 pb-3">
-        <ResultTabs />
+        {typeof barcode !== "undefined" && <ResultTabs barcode={barcode} />}
       </div>
     </div>
   );
