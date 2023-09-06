@@ -23,6 +23,7 @@ import { type NextLayoutPage } from "~/lib/utils";
 import { type RouterOutputs, api } from "~/utils/api";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { FamilyMemberSchema } from "~/lib/validators";
 
 type FamilyMemberScore = {
   score: string;
@@ -31,10 +32,12 @@ type FamilyMemberScore = {
 
 function SendMessagesResponse(props: {
   product: RouterOutputs["product"]["readOne"];
+  familyMember: FamilyMemberSchema;
 }) {
   const scoreQuery = api.openai.getFamilyScore.useQuery(
     {
       product: props.product,
+      member: props.familyMember,
     },
     {
       refetchOnWindowFocus: false,
@@ -51,6 +54,7 @@ function ResultTabs(props: { barcode: string }) {
   const productQuery = api.product.readOne.useQuery({
     barcode: props.barcode,
   });
+  const { data: dataFamily } = api.familyMember.readAll.useQuery();
   useEffect(() => {
     if (productQuery.status === "loading") {
       return;
@@ -79,7 +83,18 @@ function ResultTabs(props: { barcode: string }) {
               {productQuery.data && (
                 <Card>
                   <CardContent>
-                    <SendMessagesResponse product={productQuery.data} />
+                    {dataFamily?.map((item, idx) => {
+                      return (
+                        <div key={idx}>
+                          <Card>
+                            <SendMessagesResponse
+                              product={productQuery.data}
+                              familyMember={item}
+                            />
+                          </Card>
+                        </div>
+                      );
+                    })}
                   </CardContent>
                 </Card>
               )}

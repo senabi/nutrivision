@@ -1,4 +1,4 @@
-import { productSchema } from "~/lib/validators";
+import { familyMemberSchema, productSchema } from "~/lib/validators";
 import { createTRPCRouter, publicProcedure } from "../trpc";
 import { z } from "zod";
 import OpenAI from "openai";
@@ -21,27 +21,16 @@ export const openaiRouter = createTRPCRouter({
     .input(
       z.object({
         product: productSchema,
+        member: familyMemberSchema,
       }),
     )
     .query(async ({ input, ctx }) => {
       const openai = new OpenAI({
         apiKey: env.OPENAI_API_KEY,
       });
-      const family = await ctx.prisma.familyMember.findMany();
       const content = `Estos son los valores nutricionales del producto ${JSON.stringify(
         input.product,
-      )}. Para cada miembro de la familia estos son sus objetivos nutricionales: ${JSON.stringify(
-        family.map(
-          (member) =>
-            `${member.name} tiene los siguientes objetivos: ${member.goals} ${
-              member.diseases
-                ? `y tiene las siguientes enfermedades: ${member.diseases}`
-                : ""
-            } responde con el nombre de la persona y un emoyi donde  😢 significa que el producto perjudica al objetivo, 👌 que no lo perjudica pero tampoco ayuda,  🤤que si ayuda y 😷 que no puede consumirlo por enfermedades. el formato en el que me daras la respuesta es el siguiente nombre : emoji, razon y un salto de linea"`,
-        ),
-      )}
-            `;
-      console.log('QUESTION: ',content);
+      )}. Para ${input.member.name} tiene los siguientes objetivos: ${input.member.goals} y las siguiente enfermedades ${input.member.diseases}` + "responde con el nombre de la persona y un emoyi donde  😢 significa que el producto perjudica al objetivo, 👌 que no lo perjudica pero tampoco ayuda,  🤤que si ayuda y 😷 que no puede consumirlo por enfermedades. el formato en el que me daras la respuesta es el siguiente nombre : emoji, razon y un salto de linea";
       const res = await openai.chat.completions.create({
         model: "gpt-3.5-turbo",
         stream: false,
