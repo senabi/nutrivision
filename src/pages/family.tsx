@@ -48,7 +48,7 @@ const Family: NextLayoutPage = () => {
 };
 
 Family.getLayout = (page) => {
-  return <MainLayout>{page}</MainLayout>;
+   return <MainLayout>{page}</MainLayout>;
 };
 
 export default Family;
