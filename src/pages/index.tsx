@@ -145,7 +145,7 @@ function HomeContent() {
   console.log("barcode ->", barcode);
   return (
     <div className="flex h-screen flex-col">
-      <Card className="m-3 h-1/2 rounded-lg p-4">
+      <Card className="m-3 flex h-1/2 rounded-lg p-4">
         <Html5QrcodePlugin
           config={{
             aspectRatio: 1,
