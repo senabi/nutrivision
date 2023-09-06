@@ -50,9 +50,7 @@ function HomeContent() {
           fps: 10,
           qrbox: 250
         }}
-        qrCodeErrorCallback={(errorMessage: string, _error: Html5QrcodeError) => {
-          alert(errorMessage)
-        }}
+        qrCodeErrorCallback={(_errorMessage: string, _error: Html5QrcodeError) => undefined}
         qrCodeSuccessCallback={(decodedText: string, _result: Html5QrcodeResult) => {
           alert(decodedText)
         }}
