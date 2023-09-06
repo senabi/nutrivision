@@ -29,7 +29,7 @@ model FamilyMember {
 model Product {
     id                    String @id @default(cuid())
     name                  String
-    barcode               Int
+    barcode               String
     category              String
     carbohydrates         String
     fats                  String
@@ -40,4 +40,6 @@ model Product {
     allergens             String
     serving_sizes         String
     danger_medical        String
+
+    @@index([barcode])
 }
