@@ -47,7 +47,7 @@ function SendMessagesResponse(props: {
   if (scoreQuery.isLoading) {
     return <Skeleton className="h-12 w-full" />;
   }
-  return <div className="whitespace-pre">{scoreQuery.data}</div>;
+  return <div>{scoreQuery.data}</div>;
 }
 
 function ResultTabs(props: { barcode: string }) {
@@ -70,7 +70,6 @@ function ResultTabs(props: { barcode: string }) {
     <Tabs defaultValue="family" className="flex h-full flex-col">
       <TabsList className="grid w-full grid-cols-3">
         <TabsTrigger value="family">Familia</TabsTrigger>
-        <TabsTrigger value="product">Producto</TabsTrigger>
         <TabsTrigger value="nutricionista">Nutricionista</TabsTrigger>
       </TabsList>
       <TabsContent value="family" className="flex-1">
@@ -96,24 +95,6 @@ function ResultTabs(props: { barcode: string }) {
                   })}
                 </div>
               )}
-            </div>
-          </CardContent>
-        </Card>
-      </TabsContent>
-      <TabsContent value="product" className="flex-1">
-        <Card className="h-full">
-          <CardHeader>
-            <CardTitle>Nutricionistas</CardTitle>
-            <CardDescription>
-              * Información nutricional positiva (1)
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-2">
-            <div className="space-y-1">
-              <Label htmlFor="current">Current password</Label>
-            </div>
-            <div className="space-y-1">
-              <Label htmlFor="new">New password</Label>
             </div>
           </CardContent>
         </Card>
