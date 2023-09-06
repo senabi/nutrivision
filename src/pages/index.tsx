@@ -21,7 +21,8 @@ import { Skeleton } from "~/components/ui/skeleton";
 import { Tabs, TabsList, TabsContent, TabsTrigger } from "~/components/ui/tabs";
 import { type NextLayoutPage } from "~/lib/utils";
 import { type RouterOutputs, api } from "~/utils/api";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 type FamilyMemberScore = {
   score: string;
@@ -50,6 +51,16 @@ function ResultTabs(props: { barcode: string }) {
   const productQuery = api.product.readOne.useQuery({
     barcode: props.barcode,
   });
+  useEffect(() => {
+    if (productQuery.status === "loading") {
+      return;
+    }
+    if (productQuery.status === "error") {
+      toast.error(JSON.stringify(productQuery.error));
+    } else if (productQuery.status === "success") {
+      toast.success("Producto encontrado");
+    }
+  }, [productQuery.status, props.barcode]);
   console.log("result tabs ->", productQuery.data);
   return (
     <Tabs defaultValue="family" className="flex h-full flex-col">
@@ -134,6 +145,7 @@ function HomeContent() {
         />
       </Card>
       <div className="h-1/2 flex-1 px-3 pb-3">
+        {typeof barcode}
         {typeof barcode === "undefined" ? "undefined" : barcode}
         {typeof barcode !== "undefined" && <ResultTabs barcode={barcode} />}
       </div>
