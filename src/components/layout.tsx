@@ -40,7 +40,7 @@ export function MainLayout(props: { children: React.ReactNode }) {
     <div className="mx-auto flex min-h-screen max-w-7xl flex-1 flex-col">
       <div className="flex justify-between border-b">
         <Link href={"/"} className="p-5">
-          <Apple className="h-6 w-6 text-green-800 dark:text-green-500" />
+          <Apple className="h-6 w-6 text-green-700 dark:text-green-500" />
         </Link>
         <SideMenu />
       </div>

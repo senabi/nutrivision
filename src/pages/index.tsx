@@ -78,7 +78,7 @@ function ResultTabs(props: { barcode: string }) {
           <CardContent className="space-y-2">
             <div className="flex flex-col gap-2">
               {productQuery.data && (
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-4 pb-2">
                   {dataFamily?.map((item, idx) => {
                     return (
                       <div key={idx}>
