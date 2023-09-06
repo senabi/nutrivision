@@ -68,28 +68,24 @@ function ResultTabs(props: { barcode: string }) {
   console.log("result tabs ->", productQuery.data);
   return (
     <Tabs defaultValue="family" className="flex h-full flex-col">
-      <TabsList className="grid w-full grid-cols-3">
+      <TabsList className="grid w-full grid-cols-2">
         <TabsTrigger value="family">Familia</TabsTrigger>
         <TabsTrigger value="nutricionista">Nutricionista</TabsTrigger>
       </TabsList>
       <TabsContent value="family" className="flex-1">
         <Card className="h-full">
-          <CardHeader>
-            <CardTitle>Familia</CardTitle>
-          </CardHeader>
           <CardContent className="space-y-2">
             <div className="flex flex-col gap-2">
               {productQuery.data && (
                 <div className="flex flex-col gap-2">
                   {dataFamily?.map((item, idx) => {
                     return (
-                      <div key={idx}>
-                        <Card>
-                          <SendMessagesResponse
-                            product={productQuery.data}
-                            familyMember={item}
-                          />
-                        </Card>
+                      <div key={idx} className="rounded border">
+                        <p>{item.name}</p>
+                        <SendMessagesResponse
+                          product={productQuery.data}
+                          familyMember={item}
+                        />
                       </div>
                     );
                   })}
