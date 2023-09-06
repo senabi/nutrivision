@@ -111,7 +111,7 @@ function ResultTabs(props: { barcode: string }) {
           <CardContent className="space-y-2">
             <div className="space-y-1">
               <Label htmlFor="new">
-                {productQuery.nutritionist ??
+                {productQuery.data?.nutritionist ??
                   "No hay recomendaciones de un nutricionista."}
               </Label>
             </div>
@@ -127,7 +127,7 @@ function ResultTabs(props: { barcode: string }) {
           <CardContent className="space-y-2">
             <div className="space-y-1">
               <Label htmlFor="new">
-                {productQuery.nutritionist ??
+                {productQuery.data?.nutritionist ??
                   "No hay recomendaciones de un nutricionista."}
               </Label>
             </div>
